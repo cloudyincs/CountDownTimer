@@ -34,9 +34,7 @@
 <div id="timer"></div>
 
 <script>
-  var endTime = new Date().getTime() + ((0 * 3600 + 0 * 60 + 25) * 1000); // Set the end time for the countdown
-
-  function updateTimer() {
+  function updateTimer(endTime) {
     var currentTime = new Date().getTime();
     var remainingTime = endTime - currentTime; // Calculate the remaining time
 
@@ -53,7 +51,48 @@
     }
   }
 
-  var timerInterval = setInterval(updateTimer, 1000); // Update the timer every second
+  var timerInterval;
+
+  // Function to handle incoming countdown data
+  function handleCountdownData(data) {
+    var hours = parseInt(data.hours);
+    var minutes = parseInt(data.minutes);
+    var seconds = parseInt(data.seconds);
+
+    // Calculate total duration in milliseconds
+    var totalMilliseconds = (hours * 3600 + minutes * 60 + seconds) * 1000;
+
+    // Set the end time for the countdown
+    var endTime = new Date().getTime() + totalMilliseconds;
+
+    // Update the countdown timer
+    updateTimer(endTime);
+
+    // Update the timer interval
+    clearInterval(timerInterval);
+    timerInterval = setInterval(function() {
+      updateTimer(endTime);
+    }, 1000);
+  }
+
+  // Function to handle incoming POST requests
+  async function handlePostRequest() {
+    try {
+      var response = await fetch('/update', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      var data = await response.json();
+      handleCountdownData(data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  // Call the function to handle POST requests
+  handlePostRequest();
 </script>
 
 </body>
