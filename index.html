@@ -34,6 +34,7 @@
 <div id="timer"></div>
 
 <script>
+    var endTime = new Date().getTime() + ((0 * 3600 + 0 * 60 + 25) * 1000); // Set the end time for the countdown
   function updateTimer(endTime) {
     var currentTime = new Date().getTime();
     var remainingTime = endTime - currentTime; // Calculate the remaining time
