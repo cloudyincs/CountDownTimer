@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown Timer</title>
+
+<!-- Include Font File -->
+<style>
+  @font-face {
+    font-family: 'Big Burbank Condensed';
+    src: url('BurbankBigCondensed-Bold.otf') format('opentype'); /* Replace URL_TO_FONT_FILE with the actual URL */
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  /* Apply Font to Body */
+  body {
+    font-family: 'Big Burbank Condensed', sans-serif;
+    background-color: black;
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4em;
+  }
+</style>
+</head>
+<body>
+<div id="timer"></div>
+
+<script>
+  var endTime = new Date().getTime() + ((1 * 3600 + 0 * 60 + 0) * 1000); // Set the end time for the countdown
+
+  function updateTimer() {
+    var currentTime = new Date().getTime();
+    var remainingTime = endTime - currentTime; // Calculate the remaining time
+
+    var hours = Math.floor(remainingTime / (1000 * 60 * 60));
+    var minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+    // Check if the countdown has ended
+    if (remainingTime <= 0) {
+      clearInterval(timerInterval); // Stop the timer if countdown has ended
+      document.getElementById("timer").innerHTML = "Countdown Ended";
+    } else {
+      document.getElementById("timer").innerHTML = hours + "h " + minutes + "m " + seconds + "s";
+    }
+  }
+
+  var timerInterval = setInterval(updateTimer, 1000); // Update the timer every second
+</script>
+
+</body>
+</html>
