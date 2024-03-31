@@ -45,7 +45,7 @@
     var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
     // Check if the countdown has ended
-    if (remainingTime <= 5) {
+    if (remainingTime <= 5000) {
       clearInterval(timerInterval); // Stop the timer if countdown has ended
       document.getElementById("timer").innerHTML = "Countdown Ended";
     } else {
